@@ -3,6 +3,8 @@ import logo from "./logo.svg";
 import "./App.css";
 import MovieList from "./components/MovieList";
 import api from "./api";
+import AppBar from "./components/AppBar";
+import CssBaseline from "@material-ui/core/CssBaseline";
 
 function App() {
   const [movies, updateMovies] = useState({});
@@ -30,7 +32,11 @@ function App() {
 
   return (
     <div className="App">
-      {Object.keys(movies).length > 0 ? <MovieList movies={movies} /> : null}
+      <CssBaseline />
+      <AppBar />
+      <main>
+        {Object.keys(movies).length > 0 ? <MovieList movies={movies} /> : null}
+      </main>
     </div>
   );
 }

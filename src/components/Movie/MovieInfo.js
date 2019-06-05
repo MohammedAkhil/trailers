@@ -1,12 +1,8 @@
 import React from "react";
 import { makeStyles } from "@material-ui/styles";
 import Card from "@material-ui/core/Card";
-import CardHeader from "@material-ui/core/CardHeader";
-import CardMedia from "@material-ui/core/CardMedia";
 import CardContent from "@material-ui/core/CardContent";
-import CardActions from "@material-ui/core/CardActions";
 import Typography from "@material-ui/core/Typography";
-import { Grid } from "@material-ui/core";
 import withWidth, { isWidthUp } from "@material-ui/core/withWidth";
 import GenreList from "./GenreList";
 import AudioInterest from "./Interest";
@@ -44,23 +40,6 @@ const useStyles = makeStyles(theme => ({
 function MovieInfo({ movie, width }) {
   console.log(movie);
   const classes = useStyles();
-
-  function getSize() {
-    if (isWidthUp("lg", width)) {
-      return [260, 340];
-    }
-
-    if (isWidthUp("md", width)) {
-      return [240, 300];
-    }
-
-    if (isWidthUp("sm", width)) {
-      return [180, 300];
-    }
-
-    return [200, 315];
-  }
-
   const [cardWidth, cardHeight] = getSize();
 
   return (
@@ -106,6 +85,22 @@ function MovieInfo({ movie, width }) {
         </Typography>
       </div>
     );
+  }
+
+  function getSize() {
+    if (isWidthUp("lg", width)) {
+      return [260, 340];
+    }
+
+    if (isWidthUp("md", width)) {
+      return [240, 300];
+    }
+
+    if (isWidthUp("sm", width)) {
+      return [180, 300];
+    }
+
+    return [200, 315];
   }
 }
 

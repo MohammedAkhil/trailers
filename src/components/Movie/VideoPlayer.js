@@ -1,13 +1,10 @@
 import React from "react";
-import { Grid } from "@material-ui/core";
-import { makeStyles } from "@material-ui/styles";
 import withWidth, { isWidthUp } from "@material-ui/core/withWidth";
 
-const useStyles = makeStyles(theme => ({
-  root: {}
-}));
-
 function VideoPlayer({ url, autoplay, rel, modest, width }) {
+  const videoCode = youtubeParser(url);
+  console.log(videoCode);
+
   function getSize() {
     if (isWidthUp("lg", width)) {
       return [760, 340];
@@ -31,10 +28,16 @@ function VideoPlayer({ url, autoplay, rel, modest, width }) {
       width={videoWidth}
       height={videoHeight}
       title="a"
-      src={"https://www.youtube.com/embed/" + url}
+      src={"https://www.youtube.com/embed/" + videoCode}
       allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
     />
   );
+}
+
+function youtubeParser(url) {
+  var regExp = /^.*((youtu.be\/)|(v\/)|(\/u\/\w\/)|(embed\/)|(watch\?))\??v?=?([^#\&\?]*).*/;
+  var match = url.match(regExp);
+  return match && match[7].length === 11 ? match[7] : false;
 }
 
 export default withWidth()(VideoPlayer);

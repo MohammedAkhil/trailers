@@ -36,10 +36,7 @@ export function MovieListItem({ value, onClick, index }) {
 
   return (
     <Grid item key={value.EventCode} xs={6} sm={4} md={3} lg={2} spacing={2}>
-      <Card
-        className="card"
-        onClick={() => onClick(index, value.TrailerURL, value)}
-      >
+      <Card className="card" onClick={() => onClick(index, value)}>
         <CardMedia
           className={classes.cardMedia}
           image={`https://in.bmscdn.com/events/moviecard/${

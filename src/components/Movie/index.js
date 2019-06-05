@@ -12,11 +12,11 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export default function Movie({ url, movie }) {
+export default function Movie({ movie }) {
   const classes = useStyles();
   return (
     <Grid container xs={12} className={classes.root}>
-      <VideoPlayer url={url} />
+      <VideoPlayer url={movie.TrailerURL} />
       <MovieInfo movie={movie} />
     </Grid>
   );

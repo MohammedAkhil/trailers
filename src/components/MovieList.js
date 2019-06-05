@@ -1,5 +1,5 @@
-/* eslint-disable no-useless-escape */
-import React, { useState } from "react";
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, { useState, useEffect, useRef } from "react";
 import Grid from "@material-ui/core/Grid";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
@@ -19,8 +19,32 @@ function MovieList(props) {
   const classes = useStyles();
   const { movies } = props;
   const [cards, updateCards] = useState(getMovieCards());
-  let isPlayerOpen = false; // whether the trailer card is open
-  let prevPosition = 0; // previous position of trailer card
+  const isPlayerOpen = useRef(false); // whether the trailer card is open
+  const prevPosition = useRef(-1); // previous position of trailer card
+  const prevClickedPos = useRef(-1);
+
+  useEffect(() => {
+    if (isPlayerOpen.current && prevPosition.current > 0) {
+      updateTrailerCardPosition();
+    }
+
+    function updateTrailerCardPosition() {
+      console.log("modify rows");
+      const modify = cards;
+      deleteAt(prevPosition.current, modify);
+
+      const insertPosition = getInsertPosition(prevClickedPos.current);
+
+      insertAt(insertPosition, modify, getMovie(prevClickedPos.current));
+      updateCards([...modify]);
+      isPlayerOpen.current = true;
+      prevPosition.current = insertPosition;
+
+      function getMovie(index) {
+        return Object.entries(movies)[index][1];
+      }
+    }
+  }, [props.width]);
 
   return (
     <React.Fragment>
@@ -32,8 +56,8 @@ function MovieList(props) {
     </React.Fragment>
   );
 
-  function onClickCard(index, url, movie) {
-    insertTrailerCard(index, url, movie);
+  function onClickCard(index, movie) {
+    insertTrailerCard(index, movie);
   }
 
   function getMovieCards() {
@@ -44,49 +68,49 @@ function MovieList(props) {
     });
   }
 
-  function insertTrailerCard(index, url, movie) {
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  function insertTrailerCard(index, movie) {
+    prevClickedPos.current = index;
     const insertPosition = getInsertPosition(index);
     console.log(insertPosition + "position to insert");
     const modify = cards;
 
-    if (isPlayerOpen) {
-      deleteAt(prevPosition, modify);
+    if (isPlayerOpen.current) {
+      deleteAt(prevPosition.current, modify);
     }
-    insertAt(insertPosition, modify, url, movie);
+    insertAt(insertPosition, modify, movie);
     updateCards([...modify]);
-    isPlayerOpen = true;
-    prevPosition = insertPosition;
+    isPlayerOpen.current = true;
+    prevPosition.current = insertPosition;
+  }
 
-    function getInsertPosition(currentPos) {
-      console.log("current - " + currentPos);
-      const rowCount = getRowCount();
-      console.log("rowCount -> ", rowCount);
-      return Math.floor(currentPos / rowCount) * rowCount;
-    }
+  function getInsertPosition(currentPos) {
+    const rowCount = getRowCount();
+    return Math.floor(currentPos / rowCount) * rowCount;
+  }
 
-    function insertAt(position, arr, url, movie) {
-      arr.splice(position, 0, <Movie url={url} movie={movie} />);
-      return arr;
-    }
+  function insertAt(position, arr, movie) {
+    arr.splice(position, 0, <Movie movie={movie} />);
+    return arr;
+  }
 
-    function deleteAt(position, arr) {
-      arr.splice(position, 1);
-      return arr;
-    }
+  function deleteAt(position, arr) {
+    arr.splice(position, 1);
+    return arr;
+  }
 
-    function getRowCount() {
-      console.log("width -<", props.width);
-      if (isWidthUp("lg", props.width)) {
-        return 6;
-      }
-      if (isWidthUp("md", props.width)) {
-        return 4;
-      }
-      if (isWidthUp("sm", props.width)) {
-        return 3;
-      }
-      return 1;
+  function getRowCount() {
+    console.log("width -<", props.width);
+    if (isWidthUp("lg", props.width)) {
+      return 6;
     }
+    if (isWidthUp("md", props.width)) {
+      return 4;
+    }
+    if (isWidthUp("sm", props.width)) {
+      return 3;
+    }
+    return 1;
   }
 }
 

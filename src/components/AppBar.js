@@ -8,7 +8,8 @@ import useScrollTrigger from "@material-ui/core/useScrollTrigger";
 
 const useStyles = makeStyles(theme => ({
   icon: {
-    marginRight: theme.spacing(2)
+    marginRight: theme.spacing(2),
+    color: "#0d00ff"
   }
 }));
 
@@ -35,7 +36,11 @@ export default function AppBar(props) {
       <MaterialAppBar color={"#000000"}>
         <Toolbar>
           <CameraIcon className={classes.icon} />
-          <Typography variant="h6" color="inherit" noWrap>
+          <Typography
+            variant="h6"
+            style={{ color: "#0d00ff", fontWeight: "800" }}
+            noWrap
+          >
             Trailflix
           </Typography>
         </Toolbar>

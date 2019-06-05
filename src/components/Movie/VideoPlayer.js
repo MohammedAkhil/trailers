@@ -9,20 +9,19 @@ const useStyles = makeStyles(theme => ({
 
 function VideoPlayer({ url, autoplay, rel, modest, width }) {
   function getSize() {
-    console.log("width -<", width);
     if (isWidthUp("lg", width)) {
-      return [640, 380];
+      return [760, 340];
     }
 
     if (isWidthUp("md", width)) {
-      return [540, 340];
+      return [540, 360];
     }
 
     if (isWidthUp("sm", width)) {
-      return [440, 240];
+      return [320, 380];
     }
 
-    return [340, 115];
+    return [200, 315];
   }
 
   const [videoWidth, videoHeight] = getSize();

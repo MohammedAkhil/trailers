@@ -122,7 +122,7 @@ function MovieList(props) {
         <Grid
           item
           key={value.EventCode}
-          xs={8}
+          xs={6}
           sm={4}
           md={3}
           lg={2}

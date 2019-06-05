@@ -14,11 +14,11 @@ function VideoPlayer({ url, autoplay, rel, modest, width }) {
     }
 
     if (isWidthUp("md", width)) {
-      return [540, 360];
+      return [540, 300];
     }
 
     if (isWidthUp("sm", width)) {
-      return [320, 380];
+      return [300, 300];
     }
 
     return [200, 315];

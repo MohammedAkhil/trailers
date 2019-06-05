@@ -51,11 +51,11 @@ function MovieInfo({ movie, width }) {
     }
 
     if (isWidthUp("md", width)) {
-      return [320, 360];
+      return [240, 300];
     }
 
     if (isWidthUp("sm", width)) {
-      return [240, 360];
+      return [180, 300];
     }
 
     return [200, 315];
